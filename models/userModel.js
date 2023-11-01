@@ -21,7 +21,9 @@ class User {
       verified: this.verified,
     };
     if (this.validateAgainstSchema(user, userSchema)) {
-      await Users.add(user);
+      const userRef = Users.doc(user.email);
+
+      await userRef.set(user);
     } else {
       return { error: "Some error occured" };
     }
