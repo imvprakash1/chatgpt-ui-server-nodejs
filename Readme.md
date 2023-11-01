@@ -11,16 +11,18 @@ Migrating GPT-Django project to GPT-Node-Firebase
 
 ![User Registration API](https://github.com/imvprakash1/chatgpt-ui-server-nodejs/blob/main/documentation/images/RegisterUserAPI.PNG)
 
-Endpoint:account/register('POST')</br>
+<u>Endpoint:account/register('POST')</u></br>
 It will take the details like first name, email, password from user input and register an unvarified account for the user. The user password is hashed using the brypt package so that the password is saved in an encrypted form. Post creating the account the user will be sent a email verification link which will verify the account. Please note that the user will not be able to login with an unvarified account.
+<hr>
 
 <h4>Verify User Email</h4>
 
 ![User verification mail](https://github.com/imvprakash1/chatgpt-ui-server-nodejs/blob/main/documentation/images/UserEmailVerificationAPI.PNG)
 
-Endpoint:account/verify-email('GET')</br>
+<u>Endpoint:account/verify-email('GET')</u></br>
 It is a simple get request to the endpoint which will update the verfication status to true for the user. Please note that we can pass a secret key as query parameter which will be used to verify authenticity of the request. For now I'm using the email id of the user as the key.
 Using the nodemailer package we need to configure a transporter which will send the email. The configuration for the same is available in .env file.
+<hr>
 
 <h4>User Login</h4>
 
@@ -32,12 +34,14 @@ User Login Without Verification
 
 User Login Post Verification
 
-Endpoint:account/login('POST')</br>
+<u>Endpoint:account/login('POST')</u></br>
 Once the user has verified their email they can login to the app using their email and password. User password is not stored anywhere but the encrypted hash is used to compare if the provided password is correct using the bcrypt package.
+<hr>
 
 <h4>Resend User Email Verification</h4>
-Endpoint:account/resend-email('GET')</br>
+<u></u>Endpoint:account/resend-email('GET')</u></br>
 It is a simple get request to the endpoint which will update the verfication status to true for the user by resending the verification mail to the user.
+<hr>
 
 <h4>Controllers and Utility</h4>
 The controller functions are creaated to encapsulate the data model working and to perform some specifc tasks like sending email.
