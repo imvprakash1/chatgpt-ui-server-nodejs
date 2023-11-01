@@ -1,0 +1,26 @@
+{
+  "type": "module",
+  "name": "chatgpt-ui-server-nodejs",
+  "version": "1.0.0",
+  "description": "Chatgpt UI server migration to NodeJs-Firebase",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "nodejs",
+    "firebase",
+    "vue"
+  ],
+  "author": "imvprakash1@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
