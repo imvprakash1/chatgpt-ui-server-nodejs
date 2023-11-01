@@ -8,9 +8,7 @@ class User {
     this.email = data.email;
     this.password = data.password;
     this.createdAt = Date.now();
-    console.log(typeof this.createdAt);
-    // this.firstName = data.firstName;
-    // this.firstName = data.firstName;
+    this.verified = false;
   }
 
   async save() {
@@ -20,6 +18,7 @@ class User {
       email: this.email,
       password: this.password,
       createdAt: this.createdAt,
+      verified: this.verified,
     };
     if (this.validateAgainstSchema(user, userSchema)) {
       await Users.add(user);
@@ -30,7 +29,6 @@ class User {
   validateAgainstSchema(data, schema) {
     // Ensure all required fields in schema are present
     for (let field of Object.keys(schema)) {
-      console.log(field, data);
       if (!data.hasOwnProperty(field)) {
         throw new Error(`Missing required field ${field}`);
       }
@@ -47,6 +45,20 @@ class User {
     }
 
     return true;
+  }
+  async verifyEmail() {
+    const userRef = await Users.where("email", "==", this.email).get();
+
+    if (userRef.empty) {
+      throw new Error("User not found");
+    }
+
+    const userDoc = userRef.docs[0];
+
+    // Update verified status
+    await userDoc.ref.update({
+      verified: true,
+    });
   }
 }
 

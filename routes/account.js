@@ -12,8 +12,6 @@ async function createUser(req, res) {
       ...req.body,
     });
     await user.save();
-    //   await Users.add(user);
-    // Send verification email
     return res.status(201).json(user);
   } catch (error) {
     return res.status(403).json({ error: error.message });
@@ -21,8 +19,17 @@ async function createUser(req, res) {
 }
 
 async function verifyEmail(req, res) {
-  // Confirm email verification
-  res.json({ verified: true });
+  try {
+    // Confirm email verification
+    const email = req.body.email;
+    const user = new User({
+      email: req.body.email,
+    });
+    await user.verifyEmail(email);
+    return res.json({ verified: true });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
 }
 
 async function resendVerificationEmail(req, res) {
@@ -34,7 +41,7 @@ async function resendVerificationEmail(req, res) {
 router.post("/register", createUser);
 
 // Email verification route
-router.get("/verify-email", verifyEmail);
+router.post("/verify-email", verifyEmail);
 
 // Resend verification email
 router.post("/resend-email", resendVerificationEmail);

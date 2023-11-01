@@ -7,6 +7,7 @@ const userSchema = {
   email: "string",
   password: "string",
   createdAt: "number",
+  verified: "boolean",
 };
 
 export { userSchema };
