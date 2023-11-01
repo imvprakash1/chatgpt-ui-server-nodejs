@@ -1,5 +1,6 @@
 import Users from "./User.js";
 import { userSchema } from "./User.js";
+import bcrypt from "bcrypt";
 
 class User {
   constructor(data) {
@@ -61,6 +62,23 @@ class User {
     await userDoc.ref.update({
       verified: true,
     });
+  }
+  async loginUser() {
+    const userRef = await Users.where("email", "==", this.email).get();
+
+    if (userRef.empty) {
+      throw new Error("User not found");
+    }
+
+    const userDoc = userRef.docs[0];
+    if (!userDoc.data().verified) {
+      throw new Error("Please verify your email before logging in!");
+    }
+    const isValidPassword = await bcrypt.compare(
+      this.password,
+      userDoc.data().password
+    );
+    return isValidPassword;
   }
 }
 
